@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Services | RK Welding Workshop{% endblock %}
+
+{% block content %}
+<style>
+    .service-card {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border: 1px solid #eee;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        border-color: var(--primary-color);
+    }
+    
+    .service-img {
+        height: 200px;
+        background-color: var(--secondary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 4rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .service-img::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.5));
+    }
+    
+    .service-content {
+        padding: 2rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .service-content h3 {
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .service-content p {
+        color: var(--text-gray);
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+    }
+</style>
+
+<!-- Page Header -->
+<section style="padding: 120px 0 60px; background-color: var(--dark-bg); color: white; text-align: center;">
+    <div class="container">
+        <h1 style="font-size: 3rem; color: var(--primary-color);">Our Services</h1>
+        <p style="font-size: 1.2rem;">Comprehensive metal fabrication and welding solutions.</p>
+    </div>
+</section>
+
+<section style="padding: 5rem 0; background-color: var(--light-bg);">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem;">
+            
+            <!-- Service 1 -->
+            <div class="service-card animate">
+                <div class="service-img">
+                    <i class="fa-solid fa-fire"></i>
+                </div>
+                <div class="service-content">
+                    <h3>General Welding Work</h3>
+                    <p>Professional arc and gas welding for all types of metal repairs and general fabrication needs. We ensure strong, clean, and durable joints.</p>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="service-card animate">
+                <div class="service-img">
+                    <i class="fa-brands fa-fort-awesome"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Metal Gate Designing</h3>
+                    <p>Custom-designed main entry gates, sliding gates, and swing gates. We offer modern, ornamental, and heavy-duty industrial gate designs.</p>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="service-card animate">
+                <div class="service-img">
+                    <i class="fa-solid fa-door-open"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Door Fabrication</h3>
+                    <p>Manufacturing of sturdy iron and steel doors for residential and commercial security. We build custom-sized safety doors.</p>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="service-card animate">
+                <div class="service-img">
+                    <i class="fa-solid fa-border-all"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Ventilation & Window Grills</h3>
+                    <p>Decorative and high-security iron grills for windows and balconies. Keep your home safe without compromising on aesthetics.</p>
+                </div>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="service-card animate">
+                <div class="service-img">
+                    <i class="fa-solid fa-chair"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Iron Furniture Work</h3>
+                    <p>Custom-built metal furniture including racks, shelves, tables, and stands designed for heavy-duty usage and longevity.</p>
+                </div>
+            </div>
+            
+            <!-- Service 6 -->
+            <div class="service-card animate">
+                <div class="service-img">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Repair & Maintenance</h3>
+                    <p>Prompt repair services for broken gates, rusted grills, damaged metal structures, and other welding fixes.</p>
+                </div>
+            </div>
+            
+            <!-- Service 7 -->
+            <div class="service-card animate">
+                <div class="service-img">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Home Welding Services</h3>
+                    <p>We provide on-site welding services at your doorstep for installations and repairs that cannot be brought to our workshop.</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+{% endblock %}

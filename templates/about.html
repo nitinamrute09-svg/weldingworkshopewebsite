@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us | RK Welding Workshop{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section style="padding: 120px 0 60px; background-color: var(--dark-bg); color: white; text-align: center;">
+    <div class="container">
+        <h1 style="font-size: 3rem; color: var(--primary-color);">About Us</h1>
+        <p style="font-size: 1.2rem;">Learn more about RK Welding Workshop and our commitment to excellence.</p>
+    </div>
+</section>
+
+<section style="padding: 5rem 0; background-color: var(--light-bg);">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; align-items: center;">
+            <div class="animate">
+                <img src="{{ url_for('static', filename='images/about_welding_1772957199790.png') }}" alt="Welding Process" style="border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            </div>
+            
+            <div class="animate">
+                <h2 style="color: var(--secondary-color); font-size: 2.5rem; margin-bottom: 1.5rem; position: relative;">
+                    Our Story
+                    <span style="position: absolute; bottom: -10px; left: 0; width: 60px; height: 4px; background-color: var(--primary-color);"></span>
+                </h2>
+                <div style="margin-top: 2rem;">
+                    <p style="margin-bottom: 1.5rem; color: var(--text-dark); font-size: 1.1rem; line-height: 1.8;">
+                        Welcome to <strong>RK Welding Workshop</strong>, a trusted name in high-quality metal fabrication and welding services in Betul, Madhya Pradesh. With years of experience in the industry, we have built a reputation for delivering robust, precision-engineered metal products for both residential and commercial clients.
+                    </p>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-dark); font-size: 1.1rem; line-height: 1.8;">
+                        We specialize in custom metal works including gate designing, door fabrication, window grills, and iron furniture. Our team of skilled craftsmen combines traditional techniques with modern equipment to create products that are not only structurally sound but also aesthetically pleasing.
+                    </p>
+                    <p style="color: var(--text-dark); font-size: 1.1rem; line-height: 1.8;">
+                        Our commitment is simple: providing strong and durable work that stands the test of time. Customer satisfaction is our top priority, and we work closely with you to bring your vision to life.
+                    </p>
+                </div>
+                
+                <div style="margin-top: 2rem; display: flex; gap: 2rem;">
+                    <div style="text-align: center;">
+                        <h3 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 0;">10+</h3>
+                        <p style="color: var(--text-gray); font-weight: bold; text-transform: uppercase; font-size: 0.9rem;">Years Exp</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 0;">500+</h3>
+                        <p style="color: var(--text-gray); font-weight: bold; text-transform: uppercase; font-size: 0.9rem;">Projects</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 0;">100%</h3>
+                        <p style="color: var(--text-gray); font-weight: bold; text-transform: uppercase; font-size: 0.9rem;">Satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
