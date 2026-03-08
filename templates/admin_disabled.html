@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard Disabled | RK Welding Workshop{% endblock %}
+
+{% block content %}
+<section style="padding: 120px 0 60px; background-color: var(--light-bg); min-height: 80vh; display: flex; align-items: center;">
+    <div class="container" style="max-width: 600px;">
+        <div style="background-color: white; padding: 3rem; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; border-top: 4px solid var(--primary-color);">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+            <h2 style="color: var(--secondary-color); margin-bottom: 1rem;">Admin Dashboard Disabled on Live Website</h2>
+            
+            <p style="color: var(--text-gray); margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.6;">
+                Because Vercel uses temporary, read-only servers, any images uploaded here would be permanently deleted after a few minutes. 
+            </p>
+            
+            <div style="background-color: var(--light-bg); padding: 1.5rem; border-radius: 8px; text-align: left; margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 1rem; color: var(--secondary-color);"><i class="fa-solid fa-hard-drive"></i> How to upload images safely:</h4>
+                <ol style="margin-left: 1.5rem; color: var(--text-gray); line-height: 1.6;">
+                    <li style="margin-bottom: 0.5rem;">Open this code project on your computer.</li>
+                    <li style="margin-bottom: 0.5rem;">Run <code>python app.py</code> in your terminal.</li>
+                    <li style="margin-bottom: 0.5rem;">Go to <b>http://127.0.0.1:5000/admin</b> in your browser.</li>
+                    <li style="margin-bottom: 0.5rem;">Log in and upload your images there!</li>
+                    <li>When finished, run <code>git push</code> in your terminal to save the images permanently to GitHub and this live website.</li>
+                </ol>
+            </div>
+            
+            <a href="{{ url_for('gallery') }}" class="btn btn-primary" style="width: 100%;">Return to Gallery</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -116,12 +116,16 @@ def uploaded_file(filename):
 # --- ADMIN ROUTES ---
 @app.route('/admin')
 def admin_redirect():
+    if config.IS_VERCEL:
+        return render_template('admin_disabled.html')
     if session.get('admin_logged_in'):
         return redirect(url_for('admin_dashboard'))
     return redirect(url_for('admin_login'))
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
+    if config.IS_VERCEL:
+        return render_template('admin_disabled.html')
     if session.get('admin_logged_in'):
         return redirect(url_for('admin_dashboard'))
 
