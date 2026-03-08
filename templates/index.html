@@ -60,4 +60,15 @@
         <a href="{{ url_for('contact') }}" class="btn btn-secondary">Contact Us Now</a>
     </div>
 </section>
+
+<!-- QR Code Section -->
+<section style="padding: 60px 0; background-color: var(--light-bg); text-align: center;">
+    <div class="container">
+        <h2 class="section-title">Scan to Visit Us on Mobile</h2>
+        <p style="color: var(--text-gray); margin-bottom: 2rem;">Save our website to your phone by scanning this QR code.</p>
+        <div style="background: white; padding: 2rem; border-radius: 12px; display: inline-block; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--primary-color);">
+            <img src="{{ url_for('static', filename='images/website_qr.png') }}" alt="RK Welding Workshop QR Code" style="max-width: 250px; height: auto;">
+        </div>
+    </div>
+</section>
 {% endblock %}
