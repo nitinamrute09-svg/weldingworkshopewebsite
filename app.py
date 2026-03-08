@@ -18,6 +18,44 @@ db = SQLAlchemy(app)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
+def sqlite_seed_if_needed():
+    """Vercel's `/tmp` directory resets on new instances. 
+    This function ensures the DB and initial images exist."""
+    db.create_all()
+    if GalleryImage.query.count() == 0:
+        initial_images = [
+            {'filename': 'gallery_heavy_welding_1772957216709.png', 'title': 'Heavy Duty Welding'},
+            {'filename': 'gallery_iron_gate_1772957236931.png', 'title': 'Custom Gate Design'},
+            {'filename': 'hero_welding_bg_1772957181063.png', 'title': 'Industrial Structures'},
+            {'filename': 'gallery_window_grill_1772957273883.png', 'title': 'Window Grills'},
+            {'filename': 'gallery_metal_furniture_1772957354593.png', 'title': 'Precision Fabrication'},
+            {'filename': 'about_welding_1772957199790.png', 'title': 'On-site Repair'}
+        ]
+        
+        static_images_dir = os.path.join(os.path.dirname(__file__), 'static', 'images')
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        
+        for img in initial_images:
+            src = os.path.join(static_images_dir, img['filename'])
+            dst = os.path.join(app.config['UPLOAD_FOLDER'], img['filename'])
+            if os.path.exists(src):
+                if not os.path.exists(dst):
+                    try:
+                        shutil.copy(src, dst)
+                    except Exception as e:
+                        print(f"Error copying image on Vercel startup: {e}")
+                new_img = GalleryImage(filename=img['filename'], title=img['title'])
+                db.session.add(new_img)
+        db.session.commit()
+
+@app.before_request
+def initialize_db():
+    try:
+        sqlite_seed_if_needed()
+    except Exception as e:
+        print(f"DB initialization skipped or failed: {e}")
+
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
