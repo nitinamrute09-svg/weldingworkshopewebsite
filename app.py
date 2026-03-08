@@ -4,14 +4,15 @@ import shutil
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
+import config
 
 app = Flask(__name__)
 app.secret_key = 'rk_welding_secret_key' # In a real app, use a secure random key
 
 # Database and Upload Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gallery.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_PATH
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = os.path.join('static', 'images', 'gallery_uploads')
+app.config['UPLOAD_FOLDER'] = config.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 MB max upload size
 db = SQLAlchemy(app)
 
@@ -67,6 +68,12 @@ def contact():
             flash('Please fill out all fields.', 'error')
             
     return render_template('contact.html')
+
+from flask import send_from_directory
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 # --- ADMIN ROUTES ---
 @app.route('/admin')

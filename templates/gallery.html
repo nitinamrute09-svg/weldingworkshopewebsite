@@ -66,7 +66,7 @@
             
             {% for image in images %}
             <div class="gallery-item animate">
-                <img src="{{ url_for('static', filename='images/gallery_uploads/' + image.filename) }}" alt="{{ image.title }}">
+                <img src="{{ url_for('uploaded_file', filename=image.filename) }}" alt="{{ image.title }}">
                 <div class="gallery-overlay">
                     <h3>{{ image.title }}</h3>
                 </div>
