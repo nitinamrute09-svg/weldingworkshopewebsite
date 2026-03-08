@@ -18,40 +18,40 @@ db = SQLAlchemy(app)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
-def sqlite_seed_if_needed():
-    """Vercel's `/tmp` directory resets on new instances. 
-    This function ensures the DB and initial images exist."""
-    db.create_all()
-    if GalleryImage.query.count() == 0:
-        initial_images = [
-            {'filename': 'gallery_heavy_welding_1772957216709.png', 'title': 'Heavy Duty Welding'},
-            {'filename': 'gallery_iron_gate_1772957236931.png', 'title': 'Custom Gate Design'},
-            {'filename': 'hero_welding_bg_1772957181063.png', 'title': 'Industrial Structures'},
-            {'filename': 'gallery_window_grill_1772957273883.png', 'title': 'Window Grills'},
-            {'filename': 'gallery_metal_furniture_1772957354593.png', 'title': 'Precision Fabrication'},
-            {'filename': 'about_welding_1772957199790.png', 'title': 'On-site Repair'}
-        ]
-        
-        static_images_dir = os.path.join(os.path.dirname(__file__), 'static', 'images')
-        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-        
-        for img in initial_images:
-            src = os.path.join(static_images_dir, img['filename'])
-            dst = os.path.join(app.config['UPLOAD_FOLDER'], img['filename'])
-            if os.path.exists(src):
-                if not os.path.exists(dst):
-                    try:
-                        shutil.copy(src, dst)
-                    except Exception as e:
-                        print(f"Error copying image on Vercel startup: {e}")
-                new_img = GalleryImage(filename=img['filename'], title=img['title'])
-                db.session.add(new_img)
-        db.session.commit()
+def setup_vercel_ephemeral_storage():
+    """On Vercel, copy the pre-built Database and Uploads from the repository to the /tmp folder."""
+    # 1. Copy Database
+    repo_db_path = os.path.join(os.path.dirname(__file__), 'instance', 'gallery.db')
+    tmp_db_path = '/tmp/gallery.db'
+    
+    if not os.path.exists(tmp_db_path) and os.path.exists(repo_db_path):
+        try:
+            shutil.copy2(repo_db_path, tmp_db_path)
+            print("Copied repository DB to /tmp")
+        except Exception as e:
+            print(f"Error copying DB: {e}")
+
+    # 2. Copy Uploaded Images
+    repo_uploads_dir = os.path.join(os.path.dirname(__file__), 'static', 'images', 'gallery_uploads')
+    tmp_uploads_dir = app.config['UPLOAD_FOLDER'] # Usually /tmp/uploads
+    os.makedirs(tmp_uploads_dir, exist_ok=True)
+    
+    if os.path.exists(repo_uploads_dir):
+        for filename in os.listdir(repo_uploads_dir):
+            repo_file = os.path.join(repo_uploads_dir, filename)
+            tmp_file = os.path.join(tmp_uploads_dir, filename)
+            if os.path.isfile(repo_file) and not os.path.exists(tmp_file):
+                try:
+                    shutil.copy2(repo_file, tmp_file)
+                except Exception as e:
+                    print(f"Error copying image {filename}: {e}")
 
 @app.before_request
 def initialize_db():
     try:
-        sqlite_seed_if_needed()
+        if config.IS_VERCEL:
+            setup_vercel_ephemeral_storage()
+        db.create_all()
     except Exception as e:
         print(f"DB initialization skipped or failed: {e}")
 
