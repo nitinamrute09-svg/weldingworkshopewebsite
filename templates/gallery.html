@@ -64,47 +64,14 @@
     <div class="container">
         <div class="gallery-grid">
             
+            {% for image in images %}
             <div class="gallery-item animate">
-                <img src="{{ url_for('static', filename='images/gallery_heavy_welding_1772957216709.png') }}" alt="Welding sparks">
+                <img src="{{ url_for('static', filename='images/gallery_uploads/' + image.filename) }}" alt="{{ image.title }}">
                 <div class="gallery-overlay">
-                    <h3>Heavy Duty Welding</h3>
+                    <h3>{{ image.title }}</h3>
                 </div>
             </div>
-            
-            <div class="gallery-item animate">
-                <img src="{{ url_for('static', filename='images/gallery_iron_gate_1772957236931.png') }}" alt="Iron Gate">
-                <div class="gallery-overlay">
-                    <h3>Custom Gate Design</h3>
-                </div>
-            </div>
-            
-            <div class="gallery-item animate">
-                <img src="{{ url_for('static', filename='images/hero_welding_bg_1772957181063.png') }}" alt="Metal Structure">
-                <div class="gallery-overlay">
-                    <h3>Industrial Structures</h3>
-                </div>
-            </div>
-            
-            <div class="gallery-item animate">
-                <img src="{{ url_for('static', filename='images/gallery_window_grill_1772957273883.png') }}" alt="Grill work">
-                <div class="gallery-overlay">
-                    <h3>Window Grills</h3>
-                </div>
-            </div>
-            
-            <div class="gallery-item animate">
-                <img src="{{ url_for('static', filename='images/gallery_metal_furniture_1772957354593.png') }}" alt="Metal Fabrication">
-                <div class="gallery-overlay">
-                    <h3>Precision Fabrication</h3>
-                </div>
-            </div>
-            
-            <div class="gallery-item animate">
-                <img src="{{ url_for('static', filename='images/about_welding_1772957199790.png') }}" alt="Metal working">
-                <div class="gallery-overlay">
-                    <h3>On-site Repair</h3>
-                </div>
-            </div>
+            {% endfor %}
             
         </div>
     </div>

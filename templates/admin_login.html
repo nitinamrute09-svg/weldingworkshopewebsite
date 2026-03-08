@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Login | RK Welding Workshop{% endblock %}
+
+{% block content %}
+<section style="padding: 120px 0 60px; background-color: var(--light-bg); min-height: 80vh; display: flex; align-items: center;">
+    <div class="container" style="max-width: 500px;">
+        <div style="background-color: white; padding: 3rem; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center;">
+            <i class="fa-solid fa-lock" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+            <h2 style="color: var(--secondary-color); margin-bottom: 2rem;">Admin Access</h2>
+            
+            <form action="{{ url_for('admin_login') }}" method="POST" style="text-align: left;">
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="username" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Username</label>
+                    <input type="text" id="username" name="username" required style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; font-family: var(--font-body); font-size: 1rem;">
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label for="password" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password</label>
+                    <input type="password" id="password" name="password" required style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; font-family: var(--font-body); font-size: 1rem;">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login securely</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

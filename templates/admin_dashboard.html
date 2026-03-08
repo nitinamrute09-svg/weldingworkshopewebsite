@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard | RK Welding Workshop{% endblock %}
+
+{% block content %}
+<style>
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .upload-card {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        margin-bottom: 3rem;
+        border-top: 4px solid var(--primary-color);
+    }
+    .admin-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    .admin-image-card {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    .admin-image-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .admin-image-info {
+        padding: 1rem;
+    }
+    .admin-image-info h4 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+        color: var(--secondary-color);
+    }
+    .admin-image-info p {
+        font-size: 0.8rem;
+        color: var(--text-gray);
+        margin-bottom: 1rem;
+    }
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        transition: var(--transition);
+    }
+    .delete-btn:hover {
+        background-color: #c82333;
+    }
+    .file-input-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+    }
+    .file-input-wrapper input[type=file] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+</style>
+
+<section style="padding: 120px 0 60px; background-color: var(--light-bg); min-height: 100vh;">
+    <div class="container">
+        <div class="admin-header">
+            <div>
+                <h1 style="color: var(--secondary-color); margin-bottom: 0.5rem;">Admin Dashboard</h1>
+                <p style="color: var(--text-gray);">Manage your gallery uploads securely.</p>
+            </div>
+            <a href="{{ url_for('admin_logout') }}" class="btn btn-outline" style="color: #dc3545; border-color: #dc3545;">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </div>
+
+        <!-- Upload New Image Section -->
+        <div class="upload-card">
+            <h3 style="margin-bottom: 1.5rem; color: var(--secondary-color);"><i class="fa-solid fa-cloud-arrow-up"></i> Upload New Image</h3>
+            <form action="{{ url_for('admin_dashboard') }}" method="POST" enctype="multipart/form-data">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; align-items: flex-end;">
+                    <div>
+                        <label for="title" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Image Title</label>
+                        <input type="text" id="title" name="title" required placeholder="e.g. Modern Steel Window Grill" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Select Image File</label>
+                        <input type="file" name="image" accept="image/*" required style="width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px; background: #fff;">
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Upload Image</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Existing Images Configuration -->
+        <h3 style="margin-bottom: 1.5rem; color: var(--secondary-color);">Manage Gallery Images ({{ images|length }})</h3>
+        
+        {% if images %}
+        <div class="admin-grid">
+            {% for image in images %}
+            <div class="admin-image-card">
+                <img src="{{ url_for('static', filename='images/gallery_uploads/' + image.filename) }}" alt="{{ image.title }}">
+                <div class="admin-image-info">
+                    <h4>{{ image.title }}</h4>
+                    <p>Uploaded: {{ image.uploaded_at.strftime('%b %d, %Y') }}</p>
+                    <form action="{{ url_for('admin_delete_image', id=image.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this image? This action cannot be undone.');">
+                        <button type="submit" class="delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="background-color: white; padding: 3rem; text-align: center; border-radius: 8px;">
+            <i class="fa-solid fa-images" style="font-size: 3rem; color: var(--text-gray); margin-bottom: 1rem;"></i>
+            <h3>No images found.</h3>
+            <p style="color: var(--text-gray);">Use the form above to upload your first gallery image!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
